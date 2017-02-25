@@ -1,3 +1,6 @@
+/**
+ * Defining rules for Basic Auth.
+ */
 package com.intelliment.restws.security;
 
 import org.springframework.beans.factory.annotation.Autowired;

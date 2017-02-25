@@ -1,6 +1,4 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intelliment.restws.model.ParagraphText;
 
 public class Test {
 	public List<String> list = new ArrayList<>();
@@ -45,9 +37,8 @@ public class Test {
 		RestTemplate restTemplate = new RestTemplate();
 		// Add the Jackson message converter
 		restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-		// create request body
-		// String input = "{\"name\":\"name\",\"email\":\"email@gmail.com\"}";
 		String input = "{\"searchText\":[\"Duis\",\"Sed\",\"Donec\",\"Augue\",\"Pellentesque\",\"123\"]}";
+		
 		// set headers
 		String plainClientCredentials="test:abc123";
 		String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
@@ -60,7 +51,7 @@ public class Test {
 		// send request and parse result
 		ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
 		//
-		 System.out.println(response);
+		System.out.println(response);
 
 		// try {
 		//

@@ -1,3 +1,7 @@
+/**
+ * Bean to return json (via Object Mapper) 
+ * in case of search endpoint is being called.
+ */
 package com.intelliment.restws.model;
 
 import java.util.ArrayList;

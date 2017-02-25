@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intelliment.restws.exception.InvalidDataException;
 import com.intelliment.restws.service.RestWsService;
 
 @RestController
@@ -27,11 +29,19 @@ public class RestWsController {
 	/**
 	 * This function return json with count corresponding to each word provided
 	 * in the input json during endpoint call.
+	 * 
+	 * @throws InvalidDataException
 	 */
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public String getSearchTextCount(@RequestBody String searchText) {
+	public String getSearchTextCount(@RequestBody String searchText, HttpStatus status) throws InvalidDataException {
 		logger.info("Calling function to search text := " + searchText);
-		String countJson = restWsService.searchText(searchText);
+		String countJson = "";
+		try {
+			countJson = restWsService.searchText(searchText);
+		} catch (InvalidDataException e) {
+			logger.info("Invalid Data, sending 422 status...");
+			throw e;
+		}
 		return countJson;
 	}
 
@@ -46,7 +56,7 @@ public class RestWsController {
 	public void getTopText(@PathVariable("maxElementToRetrieve") long maxElementToRetrieve,
 			HttpServletResponse response) {
 
-		logger.info("Fecthing top " + maxElementToRetrieve + " words from paragraph");
+		logger.info("Fetching top " + maxElementToRetrieve + " words from paragraph");
 
 		List<String> topWordCountList = restWsService.retrieveTopInList(maxElementToRetrieve);
 
@@ -62,9 +72,9 @@ public class RestWsController {
 				}
 				response.getOutputStream().flush();
 			} catch (IOException e) {
-				logger.error("Error while generating CSV output."+ e.getMessage());
+				logger.error("Error while generating CSV output." + e.getMessage());
 			}
-		}else{
+		} else {
 			try {
 				response.getOutputStream().print("Sorry...No Data Found!!");
 				response.getOutputStream().flush();
@@ -73,7 +83,6 @@ public class RestWsController {
 			}
 		}
 
-		
 	}
 
 }

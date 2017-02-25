@@ -1,3 +1,7 @@
+/**
+ * Configuration file for Application, replace 
+ * spring's spring-context.xml file 
+ */
 package com.intelliment.restws.configuration;
 
 import org.springframework.context.annotation.Bean;

@@ -2,6 +2,8 @@ package com.intelliment.restws.service;
 
 import java.util.List;
 
+import com.intelliment.restws.exception.InvalidDataException;
+
 public interface RestWsService {
 	/**
 	 * This function will search for word in input json
@@ -9,7 +11,7 @@ public interface RestWsService {
 	 * @param jsonString
 	 * @return Json string consisting of counts
 	 */
-	public String searchText(String jsonString);
+	public String searchText(String jsonString) throws InvalidDataException;
 	
 	/**
 	 * This function will retrieve the top words from list 

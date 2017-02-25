@@ -1,3 +1,7 @@
+/**
+ * Converting the Input Json to a Java Object
+ * to help in processing the input.
+ */
 package com.intelliment.restws.model;
 
 import java.util.List;
